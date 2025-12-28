@@ -4,114 +4,68 @@ A pixel-perfect replica of [Axiom Trade's Pulse](https://axiom.trade/pulse) toke
 
 ![Axiom Pulse Clone Desktop](./public/screenshots/screenshot-desktop-1920.png?v=2)
 
-## 🚀 Live Demo
+## 🔗 Links
 
-- **Deployment**: [Your Vercel URL Here]
-- **YouTube Demo**: [Your YouTube URL Here]
+| Resource | Link |
+|----------|------|
+| **Live Demo** | [Vercel Deployment](https://your-vercel-url.vercel.app) |
+| **Video Demo** | [YouTube Walkthrough](https://your-youtube-url) |
+| **Design Decisions** | [DESIGN_DECISIONS.md](./DESIGN_DECISIONS.md) |
+
+---
 
 ## 📋 Project Overview
 
-This project is a production-grade implementation of a real-time token discovery interface, featuring:
+This project demonstrates a production-grade implementation of a real-time token discovery interface with:
 
-- **Three-column layout** for New Pairs, Final Stretch, and Migrated tokens
-- **Real-time price updates** with smooth color transitions (green/red flash)
-- **Interactive components** including popovers, tooltips, and modals
-- **Accessible UI** with keyboard navigation and ARIA support
-- **Responsive design** working down to 320px width with tab-based navigation
+- ✅ **Three-column layout** - New Pairs, Final Stretch, and Migrated tokens
+- ✅ **Real-time price updates** - WebSocket simulation with green/red flash animations
+- ✅ **Interactive components** - Popovers, tooltips, modals, and sorting
+- ✅ **Responsive design** - Desktop (3-column) → Mobile (tab-based navigation)
+- ✅ **Accessible UI** - Keyboard navigation, ARIA labels, Radix UI primitives
+
+---
 
 ## 🛠 Tech Stack
 
 | Category | Technology |
 |----------|------------|
-| Framework | Next.js 16 (App Router) |
-| Language | TypeScript (Strict Mode) |
-| Styling | Tailwind CSS 4 |
-| State Management | Redux Toolkit |
-| Data Fetching | TanStack Query (React Query) |
-| UI Components | Radix UI Primitives |
-| Icons | Lucide React |
+| Framework | **Next.js 16** (App Router with Turbopack) |
+| Language | **TypeScript** (Strict Mode) |
+| Styling | **Tailwind CSS 4** |
+| State Management | **Redux Toolkit** |
+| Data Fetching | **TanStack Query** (React Query) |
+| UI Components | **Radix UI** Primitives |
+| Icons | **Lucide React** |
+
+---
 
 ## 🏗 Architecture
 
-### Atomic Design Structure
+The project follows **Atomic Design Pattern** for scalable component organization:
 
 ```
 src/
 ├── components/
-│   ├── atoms/          # Basic UI primitives (10 components)
-│   │   ├── Avatar.tsx
-│   │   ├── Badge.tsx
-│   │   ├── IconButton.tsx
-│   │   ├── Modal.tsx
-│   │   ├── Popover.tsx
-│   │   ├── PriceText.tsx
-│   │   ├── ProgressBar.tsx
-│   │   ├── Skeleton.tsx
-│   │   └── Tooltip.tsx
-│   │
-│   ├── molecules/      # Combinations of atoms (4 components)
-│   │   ├── ColumnHeader.tsx
-│   │   ├── TokenCard.tsx
-│   │   ├── TokenCardSkeleton.tsx
-│   │   └── TokenDetailsPopover.tsx
-│   │
-│   ├── organisms/      # Complex UI sections (5 components)
-│   │   ├── ErrorBoundary.tsx
-│   │   ├── Header.tsx
-│   │   ├── PulseTable.tsx
-│   │   ├── TokenColumn.tsx
-│   │   └── Toolbar.tsx
-│   │
-│   └── providers/      # Context providers
-│       ├── QueryProvider.tsx
-│       ├── ReduxProvider.tsx
-│       └── index.tsx
+│   ├── atoms/          # 10 basic UI primitives (Avatar, Badge, Modal, Tooltip...)
+│   ├── molecules/      # 4 component combinations (TokenCard, ColumnHeader...)
+│   ├── organisms/      # 5 complex sections (PulseTable, TokenColumn, Header...)
+│   └── providers/      # Context providers (Redux, React Query)
 │
-├── hooks/              # Custom React hooks
-│   ├── useMediaQuery.ts    # SSR-safe responsive hook
-│   ├── useNewTokenSimulator.ts
-│   ├── useTokens.ts        # React Query hooks
-│   ├── useWebSocket.ts     # Real-time updates
-│   └── index.ts
-│
-├── services/           # API and WebSocket services
-│   ├── api.ts              # Mock API service
-│   ├── mockWebSocket.ts    # Simulated price streams
-│   └── newTokenSimulator.ts
-│
-├── store/              # Redux store
-│   ├── slices/
-│   │   ├── priceSlice.ts   # Price directions for flash animations
-│   │   └── uiSlice.ts      # UI state (tabs, modals, sorting)
-│   └── index.ts
-│
+├── hooks/              # Custom hooks (useWebSocket, useTokens, useMediaQuery)
+├── services/           # Mock API & WebSocket services
+├── store/              # Redux slices (UI state, price directions)
 ├── types/              # TypeScript definitions (270+ lines)
-│   └── index.ts
-│
-├── utilities/          # Helper functions
-│   ├── constants.ts
-│   ├── formatters.ts
-│   └── mockData.ts
-│
-└── lib/
-    └── utils.ts        # cn() utility for classnames
+└── utilities/          # Formatters, constants, mock data
 ```
 
-### State Management Strategy
+> 📖 For detailed architecture decisions, see **[DESIGN_DECISIONS.md](./DESIGN_DECISIONS.md)**
 
-**Redux Toolkit** manages:
-- UI state (active tab, sort config, modals, hover states)
-- WebSocket connection status
-- Real-time price update directions (for flash animations)
+---
 
-**React Query** handles:
-- Token data fetching with `useQuery`
-- Cache management with `queryClient.setQueryData`
-- Optimistic updates for real-time price changes
+## ✨ Key Features
 
-## ✨ Features
-
-### 1. Token Discovery Table
+### Token Discovery Table
 
 | Column | Description |
 |--------|-------------|
@@ -119,37 +73,46 @@ src/
 | **Final Stretch** | Tokens approaching migration (5-60 minutes) |
 | **Migrated** | Successfully migrated tokens (1-24 hours) |
 
-### 2. Interactions
+### Interactions
 
-| Interaction | Description |
-|-------------|-------------|
-| **Tooltip** | Hover on icons for hints (Radix UI) |
-| **Modal** | Click token card for expanded details |
-| **Sorting** | Sort by age, market cap, volume, price |
-| **Hover Effects** | Row highlight with smooth transitions |
-| **Presets** | P1, P2, P3 preset filter buttons |
-| **Copy Address** | Click copy icon to copy contract address |
+- **Tooltips** - Hover on badges and icons for contextual information
+- **Modal** - Click any token card for expanded details
+- **Sorting** - Sort columns by age, market cap, volume, or price
+- **Hover Effects** - Smooth row highlighting with transitions
+- **Copy Address** - One-click contract address copying
 
-### 3. Real-Time Updates
+### Real-Time Updates
 
-- Mock WebSocket updates **20-40% of tokens** every 1.5 seconds
-- **Green flash** animation on price increase
-- **Red flash** animation on price decrease
-- Cell-level updates (no full table re-renders)
-- Token age increments every second
+- Mock WebSocket updates 20-40% of tokens every 1.5 seconds
+- **Green flash** on price increase, **Red flash** on price decrease
+- Cell-level updates (optimized, no full re-renders)
+- New tokens appear every 5 seconds with entry animation
 
-### 4. Loading States
+### Loading States
 
-- **Shimmer effect**: Animated loading placeholders
-- **Skeleton loading**: Static placeholders
-- **Progressive loading**: Staggered row appearance
-- **Error boundary**: Graceful failure recovery with retry
+- Shimmer/skeleton loading placeholders
+- Progressive staggered row appearance
+- Error boundary with retry functionality
 
-### 5. New Token Simulation
+---
 
-- New tokens appear every 5 seconds
-- Entry animation with green glow effect
-- Weighted distribution (60% New Pairs, 25% Final Stretch, 15% Migrated)
+## 📱 Responsive Design
+
+| Breakpoint | Layout |
+|------------|--------|
+| ≥1024px | Three-column grid |
+| <1024px | Tab-based single column |
+
+### Desktop View (1920px)
+![Desktop View](./public/screenshots/screenshot-desktop-1920.png?v=2)
+
+### Tablet View (768px)
+![Tablet View](./public/screenshots/screenshot-tablet-768.png?v=2)
+
+### Mobile View (375px)
+![Mobile View](./public/screenshots/screenshot-mobile-375.png?v=2)
+
+---
 
 ## 🚀 Getting Started
 
@@ -162,10 +125,10 @@ src/
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/axiom-pulse-clone.git
+git clone https://github.com/Ankitg-713/Token-Trading-Table---EL-Task.git
 
 # Navigate to project directory
-cd axiom-pulse-clone
+cd Token-Trading-Table---EL-Task
 
 # Install dependencies
 npm install
@@ -174,148 +137,68 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view in browser.
+Open **[http://localhost:3000](http://localhost:3000)** to view the application.
 
-### Available Scripts
+### Scripts
 
-```bash
-npm run dev      # Start development server (Turbopack)
-npm run build    # Build for production
-npm run start    # Start production server
-npm run lint     # Run ESLint
-```
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server (Turbopack) |
+| `npm run build` | Build for production |
+| `npm run start` | Start production server |
+| `npm run lint` | Run ESLint |
 
-## ⚡ Performance Optimizations
+---
 
-### Techniques Used
+## ⚡ Performance Highlights
 
-1. **Memoization**
-   - `React.memo()` on all components
-   - `useMemo()` for derived/sorted token lists
-   - `useCallback()` for event handlers
+- **Memoization** - `React.memo()`, `useMemo()`, `useCallback()` throughout
+- **Cell-level updates** - Only affected cells re-render on price changes
+- **SSR-safe hooks** - Proper hydration handling for responsive layouts
+- **Tree-shaking** - Selective Radix UI and Lucide imports
+- **Auto-hiding scrollbars** - Custom CSS + JS for clean UX
 
-2. **Render Optimization**
-   - Cell-level price updates via Redux selectors
-   - `usePriceDirection(tokenId)` hook for individual subscriptions
-   - No layout shifts on data updates
-
-3. **SSR Safety**
-   - `useMediaQuery` hook handles hydration correctly
-   - No window/document access during SSR
-
-4. **Bundle Optimization**
-   - Tree-shaking enabled
-   - Radix UI primitives (no full component library)
-   - Lucide icons with selective imports
-
-### Lighthouse Scores
-
-| Metric | Target | Status |
-|--------|--------|--------|
-| Performance | ≥90 | ⬜ Pending |
-| Accessibility | ≥90 | ⬜ Pending |
-| Best Practices | ≥90 | ⬜ Pending |
-| SEO | ≥90 | ⬜ Pending |
-
-> Run `npx lighthouse http://localhost:3000 --view` to generate report
-
-## 📱 Responsive Design
-
-The application is fully responsive with two layout modes:
-
-| Breakpoint | Layout |
-|------------|--------|
-| ≥1024px (Desktop) | Three-column grid layout |
-| <1024px (Mobile/Tablet) | Tab-based single column |
-
-### Screenshots
-
-#### Desktop View (1920px) - Three Column Layout
-![Desktop View](./public/screenshots/screenshot-desktop-1920.png?v=2)
-
-#### Tablet View (768px) - Three Column (compact)
-![Tablet View](./public/screenshots/screenshot-tablet-768.png?v=2)
-
-#### Mobile View (375px) - Tab Navigation
-![Mobile View](./public/screenshots/screenshot-mobile-375.png?v=2)
+---
 
 ## ♿ Accessibility
 
 - ✅ Full keyboard navigation (Tab, Enter, Escape)
 - ✅ ARIA labels on all interactive elements
-- ✅ Semantic HTML structure (`<header>`, `<main>`, `<footer>`)
-- ✅ Focus visible indicators (`:focus-visible`)
-- ✅ Screen reader friendly (Radix UI primitives)
-- ✅ Color contrast compliance
-
-## 📦 Deployment Checklist
-
-### Pre-Deployment
-
-- [ ] Run `npm run build` successfully
-- [ ] Run `npm run lint` with no errors
-- [ ] Test all breakpoints (320px, 768px, 1024px, 1920px)
-- [ ] Verify modal opens/closes correctly
-- [ ] Check real-time price updates are working
-- [ ] Run Lighthouse audit ≥90 on all metrics
-
-### Vercel Deployment
-
-```bash
-# Option 1: Vercel CLI
-npm i -g vercel
-vercel
-
-# Option 2: GitHub Integration
-# 1. Push to GitHub
-# 2. Connect repo in Vercel dashboard
-# 3. Deploy automatically
-```
-
-### Post-Deployment
-
-- [ ] Update README with Vercel URL
-- [ ] Record 1-2 minute YouTube demo showing:
-  - [ ] Three-column desktop layout
-  - [ ] Tab navigation on mobile
-  - [ ] Real-time price updates with color flashes
-  - [ ] Modal opening/closing
-  - [ ] Hover interactions
-  - [ ] New token appearing
-- [ ] Update README with YouTube URL
-- [ ] Final commit with all URLs
-
-## 🎬 YouTube Demo Script (1-2 min)
-
-1. **Intro** (10s): "This is my Axiom Pulse clone built with Next.js and TypeScript"
-2. **Desktop Layout** (20s): Show 3-column layout, scroll through tokens
-3. **Real-time Updates** (15s): Point out price changes and color flashes
-4. **Interactions** (30s): Click token → modal, hover effects, tooltips
-5. **Responsive** (20s): Resize browser to show tab view on mobile
-6. **Code Quality** (15s): Quick scroll through atomic components structure
-7. **Outro** (10s): "Built with React Query, Redux Toolkit, and Radix UI"
-
-## 🧪 Testing Notes
-
-The project uses mock data and services for development:
-
-- `mockWebSocket.ts` - Simulates WebSocket price streams
-- `mockData.ts` - Generates realistic token data
-- `newTokenSimulator.ts` - Creates new tokens periodically
-
-No actual API or WebSocket connections are required.
-
-## 📄 License
-
-This project is for educational purposes only. Not affiliated with Axiom Trade.
-
-## 🙏 Acknowledgments
-
-- [Axiom Trade](https://axiom.trade) for design inspiration
-- [Radix UI](https://radix-ui.com) for accessible primitives
-- [Tailwind CSS](https://tailwindcss.com) for utility-first styling
-- [Lucide](https://lucide.dev) for beautiful icons
+- ✅ Semantic HTML structure
+- ✅ Focus visible indicators
+- ✅ Screen reader friendly (Radix UI)
 
 ---
 
-Built with ❤️ for the EternaLabs Frontend Assessment
+## 📚 Documentation
+
+| Document | Description |
+|----------|-------------|
+| [DESIGN_DECISIONS.md](./DESIGN_DECISIONS.md) | Detailed explanation of architecture, state management, component design, and technical decisions |
+| [DEPLOYMENT_CHECKLIST.md](./DEPLOYMENT_CHECKLIST.md) | Pre-deployment and post-deployment verification checklist |
+
+---
+
+## 🧪 Note on Mock Services
+
+This project uses **simulated data** for demonstration:
+
+- `mockWebSocket.ts` - Simulates real-time price streams
+- `mockData.ts` - Generates realistic token data
+- `newTokenSimulator.ts` - Creates new tokens periodically
+
+No actual blockchain API or WebSocket connections are required to run the application.
+
+---
+
+## 👤 Author
+
+**Ankit Kumar Gupta**
+
+Built for the **EternaLabs Frontend Developer Assessment**
+
+---
+
+## 📄 License
+
+This project is for educational/assessment purposes only. Not affiliated with Axiom Trade.
